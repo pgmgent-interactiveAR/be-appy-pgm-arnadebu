@@ -14,10 +14,12 @@ const app = {
 
   },
   cacheElements() {
+    this.$enterScreen = document.querySelector('.enter-screen');
+    this.$enterScreenBg = document.querySelector('#enter-screen-bg');
     this.$splash = document.querySelector('.splash');
     this.$launchVirtualPet = document.querySelector('.launch-virtual-pet');
     this.$virtualPetUI = document.querySelector('.virtual-pet-app');
-    this.$launchDancingLector = document.querySelector('.launch-lector-app');
+    this.$launchDancingLector = document.querySelector('.launch-dancing-lector');
     this.$dancingLectorUI = document.querySelector('.dancing-lector-app');
     this.$reticle = document.querySelector("[ar-hit-test]");
     this.$sambaBtn = document.querySelector('.samba');
@@ -41,15 +43,17 @@ const app = {
       object.setAttribute("visible", true);
     };
 
-    // Exit AR mode
+    // ! Exit AR button
     exit.addEventListener('click', function () {
       scene.xrSession.end();
     });
 
-    // When entering AR mode...
+    // ! When entering AR mode...
     scene.addEventListener("enter-vr", () => {
 
       // Show splash screen
+      this.$enterScreenBg.setAttribute('visible', 'false');
+      this.$enterScreen.classList.add('is-hidden');
       this.$splash.classList.remove('is-hidden');
 
       // Add events for generating UI
@@ -61,7 +65,7 @@ const app = {
       reticle.setAttribute('visible', 'true');
     });
 
-    // When leaving AR mode...
+    // ! When leaving AR mode...
     scene.addEventListener("exit-vr", () => {
       // Remove splash screen
       this.$splash.classList.add('is-hidden');
@@ -72,11 +76,11 @@ const app = {
     });
 
 
-    reticle.addEventListener('select', function () {
-      if (this.components["ar-hit-test"].hasFoundAPose) {
-        positionObject();
-      }
-    });
+    // reticle.addEventListener('select', function () {
+    //   if (this.components["ar-hit-test"].hasFoundAPose) {
+    //     positionObject();
+    //   }
+    // });
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -110,13 +114,15 @@ const app = {
     app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
   },
   addAnimation(object, animation) {
-    object.setAttribute('animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
+    object.setAttribute('"animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
   },
   generatePositionObject(object) {
     const $reticle = this.$reticle;
 
-    $reticle.addEventListener('select', function () {
+    $reticle.addEventListener('select', function () {   
       if (this.components["ar-hit-test"].hasFoundAPose) {
+        document.querySelector('.app__title').innerHTML = "Goose party!";
+        document.querySelector('.app__title').classList.add('neon');
         object.setAttribute("position", $reticle.getAttribute("position"));
         object.setAttribute("visible", true);
       }

@@ -20,35 +20,53 @@
             <a-asset-item id="helenaModel" src="./assets/helena.glb"></a-asset-item>
         </a-assets>
 
-        <a-entity visible="false" id="goose" gltf-model="#gooseModel" scale="0.1 0.1 0.1" position="0 2 -8" rotation="0" animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
-        <a-entity visible="false" id="helena" gltf-model="#helenaModel" scale="0.00075 0.00075 0.00075" position="0 2 -8" rotation="0" animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
+        <a-entity visible="false" id="goose" gltf-model="#gooseModel" scale="0.1 0.1 0.1" position="0 2 -8" rotation="0"
+            animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
+        <a-entity visible="false" id="helena" gltf-model="#helenaModel" scale="0.00075 0.00075 0.00075"
+            position="0 2 -8" rotation="0"
+            animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
 
         <a-entity ar-hit-test="doHitTest:false" visible="false">
             <a-plane rotation="-90 0 0" width="0.2" height="0.2" src="./arrow.png"
                 material="transparent:true;"></a-plane>
         </a-entity>
 
-        <a-sky color="skyblue" hide-in-ar-mode></a-sky>
-        <a-plane rotation="-90 0 0" width="20" height="20" color="green" static-body hide-in-ar-mode></a-plane>
+        <a-sky id="enter-screen-bg" visible="true" src="./assets/sky.jpg"></a-sky>
 
         <a-camera></a-camera>
     </a-scene>
 
-    
-    
+
+    <section class="enter-screen">
+        <h1 class="enter__title">BE APPY</h1>
+        <span class="enter__description">Press AR to start the experience</span>
+    </section>
+
     <div id="overlay" class="container">
+
         <section class="splash is-hidden">
-            <button class="launch-virtual-pet">Add a pet</button>
-            <button class="launch-lector-app">Add a lector</button>
-            <button class="exit-button">Stop AR</button>
+            <div class="splash__content">
+                <h1 class="splash__title"><span>What would make you</span><br>BE APPY</h1>
+                <button class="launch-virtual-pet btn-grad">
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M8.5 11c0 .552-.449 1-1 1-.551 0-1-.448-1-1s.449-1 1-1c.551 0 1 .448 1 1zm9 0c0 .552-.448 1-1 1s-1-.448-1-1 .448-1 1-1 1 .448 1 1zm3.639 4.526l-3.471 1c-.635.187-.913-.778-.277-.961l3.47-1c.637-.185.911.779.278.961zm-1.477 3.446l-2.284-.728c-.63-.2-.33-1.148.303-.953l2.284.728c.637.203.316 1.147-.303.953zm-5.162-7.972c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm.956 7.351c-.548 1.214-2.471 1.831-3.456.543-.987 1.289-2.91.67-3.456-.543-.271-.601.639-1.015.912-.411.336.747 2.033 1.302 2.044-.796v-.505c-.615-.218-1.062-.798-1.062-1.313 0-.646.7-.935 1.562-.935.861 0 1.562.289 1.562.935 0 .515-.447 1.094-1.062 1.313v.505c.009 2.119 1.713 1.532 2.044.796.27-.602 1.184-.192.912.411zm-9.956-7.351c0-1.104.896-2 2-2s2 .896 2 2-.896 2-2 2-2-.896-2-2zm1.123 7.244l-2.285.728c-.625.192-.937-.751-.304-.953l2.285-.728c.636-.197.93.753.304.953zm-3.484-3.679l3.47 1c.638.184.356 1.148-.277.961l-3.471-1c-.638-.183-.354-1.147.278-.961zm15.589-14.565c-2.082 1.814-3.082 3.044-4.546 5.261-1.213-.298-3.206-.293-4.364 0-1.401-2.11-2.405-3.344-4.546-5.261-3.068 4.042-5.272 8.939-5.272 13.565 0 5.759 3.397 10.435 12 10.435s12-4.676 12-10.435c0-4.578-2.207-9.502-5.272-13.565z"/></svg>
+                    A dancing pet
+                </button>
+                <button class="launch-dancing-lector btn-grad">
+                    <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd"><path d="M18.028 24h-.018c-.268 0-.49-.213-.499-.483-.05-1.462.19-2.847 2.265-3.08.795-.089.858-.367.996-.977.229-1.008.607-1.922 2.701-2.032.285-.02.512.197.526.473.014.276-.197.512-.473.526-1.512.079-1.618.547-1.778 1.254-.152.667-.359 1.581-1.861 1.751-1.016.113-1.432.423-1.377 2.051.01.276-.207.507-.482.517zm-8.342-18.714c.241.213.53.366.842.444l3.566.896c.3.076.617.051.903-.07 1.082-.461 3.862-1.684 5.062-2.155.76-.299 1.268.63.655 1.097-1.39 1.062-5.714 4.086-5.714 4.086l-.862 3.648s1.785 1.86 2.544 2.7c.423.469.696.919.421 1.595-.481 1.181-1.457 3.477-1.908 4.547-.255.605-1.164.453-1.015-.322.217-1.128.781-4.016.781-4.016l-3.558-1.62s-.253 5.953-.327 7.296c-.019.341-.253.589-.582.588-.249-.001-.508-.173-.612-.596-.534-2.178-2.142-8.99-2.142-8.99-.209-.837-.329-1.53-.053-2.564l.915-3.85s-2.726-3.984-3.709-5.476c-.402-.611.356-1.18.808-.78l3.985 3.542zm-7.178 8.489l-.853.511 2.708 4.524c-1.788.306-2.917 1.904-2.048 3.356.537.897 1.753 1.106 2.622.586 1.034-.619 1.774-1.952.979-3.284l-3.408-5.693zm17.721-5.193l.904 1.669 1.867.344-1.308 1.376.249 1.882-1.712-.819-1.713.819.25-1.882-1.309-1.376 1.867-.344.905-1.669zm-17.298-2.935l-2.934 2.935 2.934 2.935 2.935-2.935-2.935-2.935zm9.055-5.398c1.36-.626 2.972-.03 3.597 1.33.626 1.36.03 2.972-1.33 3.598-1.36.625-2.972.029-3.598-1.331-.625-1.36-.029-2.972 1.331-3.597z"/></svg>
+                    A dancing Helena
+                </button>
+                <button class="exit-button btn-grad btn-grad--outline">Stop AR</button>
+            </div>
         </section>
-        
+
         <section class="virtual-pet-app is-hidden">
-            <h1>This is the pet app!</h1>
-            <button class="samba">Samba</button>
-            <button class="hiphop">Hip-Hop</button>
-            <button class="belly">Belly</button>
-            <button class="swing">Swing</button>
+            <h1 class="app__title">Drop it!</h1>
+            <div class="app__buttons">
+                <button class="samba btn-grad btn-grad--round">Samba</button>
+                <button class="hiphop btn-grad btn-grad--round">Hip-Hop</button>
+                <button class="belly btn-grad btn-grad--round">Belly</button>
+                <button class="swing btn-grad btn-grad--round">Swing</button>
+            </div>
         </section>
 
         <section class="dancing-lector-app is-hidden">
@@ -58,9 +76,10 @@
             <button class="twerk">Twerk</button>
             <button class="idle">Idle</button>
         </section>
-    </div> 
-    
-    
+    </div>
+
+
     <script type="module" src="./js/main.js"></script>
 </body>
+
 </html>
