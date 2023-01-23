@@ -67,11 +67,19 @@ body {
   left: 0;
   top: 0;
   height: 100vh;
+  border: 1px solid red;
   width: 100vw;
-  z-index: 100;
-  /* background-color: red; */
-  /* pointer-events: none; */
-  user-select: none;
+  z-index: 0;
+  user-select: auto;
+}
+
+#overlay:xr-overlay {
+  width: 3rem;
+  height: 3rem;
+  background-color: green;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 .is-visible {
@@ -93,6 +101,17 @@ body {
     0 0 90px #0ff,
     0 0 100px #0ff,
     0 0 150px #0ff;
+}
+
+/* LOADING SCREEN */
+.loading-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+  z-index: 1000;
 }
 
 /* START SCREEN */
@@ -190,15 +209,30 @@ body {
 
 /* VIRTUAL PET */
 
+.virtual-pet-app {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1000;
+  user-select: none;
+}
 
 /* APP */
 
-.app__title {
+.app__title-lector,
+.app__title-pet {
   color: white;
   text-align: center;
   text-transform: uppercase;
   font-size: 2.5rem;
-  margin: 1.5rem 0;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50%;
+
 }
 
 .app__buttons {
@@ -259,5 +293,5 @@ body {
   justify-content: center;
   align-items: center;
   font-size: .65rem;
-  padding: 1.7rem;
+  padding: 2rem;
 }

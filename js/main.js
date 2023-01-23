@@ -11,10 +11,11 @@ function hasDomOverlay(session) {
 const app = {
   init() {
     this.cacheElements();
-
+    this.showLoadingScreen();
   },
   cacheElements() {
     this.$enterScreen = document.querySelector('.enter-screen');
+    this.$loadingScreen = document.querySelector('.loading-screen');
     this.$enterScreenBg = document.querySelector('#enter-screen-bg');
     this.$splash = document.querySelector('.splash');
     this.$launchVirtualPet = document.querySelector('.launch-virtual-pet');
@@ -32,16 +33,16 @@ const app = {
     this.$idleBtn = document.querySelector('.idle');
     this.addEventListeners();
   },
+  showLoadingScreen() {
+    setTimeout(() => {
+      this.$loadingScreen.classList.add('is-hidden');
+    }, 7000);
+  },
   addEventListeners() {
     const exit = document.querySelector('.exit-button');
     const scene = document.querySelector('a-scene');
     const reticle = document.querySelector("[ar-hit-test]");
     const object = document.getElementById('eagle');
-
-    function positionObject() {
-      object.setAttribute("position", reticle.getAttribute("position"));
-      object.setAttribute("visible", true);
-    };
 
     // ! Exit AR button
     exit.addEventListener('click', function () {
@@ -74,13 +75,22 @@ const app = {
       reticle.setAttribute('ar-hit-test', 'doHitTest:false');
       reticle.setAttribute('visible', 'false');
     });
+  },
+  generateDancingLectorApp() {
+    // Remove splash screen and add UI for virtual pet application
+    document.querySelector('.splash').classList.add('is-hidden');
+    document.querySelector('.dancing-lector-app').classList.remove('is-hidden');
+    document.querySelector('#goose').classList.add('is-hidden');
 
+    // Get model and show object when screen is selected
+    const object = document.getElementById('helena');
+    app.generatePositionObject(object);
 
-    // reticle.addEventListener('select', function () {
-    //   if (this.components["ar-hit-test"].hasFoundAPose) {
-    //     positionObject();
-    //   }
-    // });
+    // Add animation when button is clicked
+    app.$flairBtn.addEventListener('click', () => app.addAnimation(object, 'flair'));
+    app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
+    app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
+    app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -98,31 +108,21 @@ const app = {
     app.$bellyBtn.addEventListener('click', () => app.addAnimation(object, 'belly'));
     app.$swingBtn.addEventListener('click', () => app.addAnimation(object, 'swing'));
   },
-  generateDancingLectorApp() {
-    // Remove splash screen and add UI for virtual pet application
-    document.querySelector('.splash').classList.add('is-hidden');
-    document.querySelector('.dancing-lector-app').classList.remove('is-hidden');
-
-    // Get model and show object when screen is selected
-    const object = document.getElementById('helena');
-    app.generatePositionObject(object);
-
-    // Add animation when button is clicked
-    app.$flairBtn.addEventListener('click', () => app.addAnimation(object, 'flair'));
-    app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
-    app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
-    app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
-  },
   addAnimation(object, animation) {
-    object.setAttribute('"animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
+    object.setAttribute('animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
   },
   generatePositionObject(object) {
     const $reticle = this.$reticle;
 
-    $reticle.addEventListener('select', function () {   
+    $reticle.addEventListener('select', function () {
       if (this.components["ar-hit-test"].hasFoundAPose) {
-        document.querySelector('.app__title').innerHTML = "Goose party!";
-        document.querySelector('.app__title').classList.add('neon');
+        if (object.id == "helena") {
+          document.querySelector('.app__title-lector').innerHTML = "Let's go Helena!";
+          document.querySelector('.app__title-lector').classList.add('neon');
+        } else {
+          document.querySelector('.app__title-pet').innerHTML = "Goose Party!";
+          document.querySelector('.app__title-pet').classList.add('neon');
+        }
         object.setAttribute("position", $reticle.getAttribute("position"));
         object.setAttribute("visible", true);
       }
