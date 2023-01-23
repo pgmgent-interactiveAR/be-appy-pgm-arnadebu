@@ -31,12 +31,13 @@ const app = {
     this.$sillyBtn = document.querySelector('.silly');
     this.$twerkBtn = document.querySelector('.twerk');
     this.$idleBtn = document.querySelector('.idle');
+    this.$ExitApp = document.querySelectorAll('.exit-app')
     this.addEventListeners();
   },
   showLoadingScreen() {
     setTimeout(() => {
       this.$loadingScreen.classList.add('is-hidden');
-    }, 7000);
+    }, 4000);
   },
   addEventListeners() {
     const exit = document.querySelector('.exit-button');
@@ -46,7 +47,7 @@ const app = {
 
     // ! Exit AR button
     exit.addEventListener('click', function () {
-      scene.xrSession.end();
+      window.location.reload();
     });
 
     // ! When entering AR mode...
@@ -60,6 +61,9 @@ const app = {
       // Add events for generating UI
       this.$launchVirtualPet.addEventListener('click', this.generateVirtualPetApp);
       this.$launchDancingLector.addEventListener('click', this.generateDancingLectorApp);
+
+      // Close when exit button is pressed
+      this.$ExitApp.forEach((btn) => app.closeApp(btn));
 
       // Activate hit-test
       reticle.setAttribute('ar-hit-test', 'doHitTest:true');
@@ -91,6 +95,8 @@ const app = {
     app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
     app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
     app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
+
+
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -128,6 +134,16 @@ const app = {
       }
     });
   },
+  closeApp(btn) {
+    btn.addEventListener('click', (ev) => {
+      if (btn.dataset.name == "lector") {
+        document.querySelector('.dancing-lector-app').classList.add('is-hidden'); 
+      } else {
+        document.querySelector('.virtual-pet-app').classList.add('is-hidden'); 
+      }
+      app.$splash.classList.remove('is-hidden');
+    })
+  }
 
 }
 
