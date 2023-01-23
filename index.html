@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Basketball Game</title>
+    <title>BE APPY!</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://aframe.io/releases/1.1.0/aframe.min.js"></script>
     <script src="ar-components.js"></script>
@@ -16,12 +16,12 @@
         vr-mode-ui="enabled: true">
 
         <a-assets>
-            <a-asset-item id="eagleModel" src="./Eagle.glb"></a-asset-item>
+            <a-asset-item id="gooseModel" src="./assets/goose.glb"></a-asset-item>
+            <a-asset-item id="helenaModel" src="./assets/helena.glb"></a-asset-item>
         </a-assets>
 
-        <a-sphere id="ball" dynamic-body radius="0.1" color="orange" position="0.1 2.36 -1.5"></a-sphere>
-
-        <a-entity id="eagle" gltf-model="#eagleModel" scale="0.1 0.1 0.1" position="0 2 -8"></a-entity>
+        <a-entity visible="false" id="goose" gltf-model="#gooseModel" scale="0.1 0.1 0.1" position="0 2 -8" rotation="0" animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
+        <a-entity visible="false" id="helena" gltf-model="#helenaModel" scale="0.00075 0.00075 0.00075" position="0 2 -8" rotation="0" animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
 
         <a-entity ar-hit-test="doHitTest:false" visible="false">
             <a-plane rotation="-90 0 0" width="0.2" height="0.2" src="./arrow.png"
@@ -44,8 +44,19 @@
         </section>
         
         <section class="virtual-pet-app is-hidden">
+            <h1>This is the pet app!</h1>
+            <button class="samba">Samba</button>
+            <button class="hiphop">Hip-Hop</button>
+            <button class="belly">Belly</button>
+            <button class="swing">Swing</button>
+        </section>
+
+        <section class="dancing-lector-app is-hidden">
             <h1>This is the lector app!</h1>
-            <button class="animate">Animate</button>
+            <button class="flair">Breakdance</button>
+            <button class="silly">Silly</button>
+            <button class="twerk">Twerk</button>
+            <button class="idle">Idle</button>
         </section>
     </div> 
     
