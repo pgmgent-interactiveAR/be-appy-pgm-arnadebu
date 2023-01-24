@@ -184,7 +184,7 @@ const app = {
       if (this.components["ar-hit-test"].hasFoundAPose) {
         if (object.id == "helena") {
           // Add title block
-          app.$lectorTitle.innerHTML = "Let's go Helena!";
+          app.$lectorTitle.innerHTML = "Let's go<br>Helena!";
           // Add a neon effect to the title block
           app.$lectorTitle.classList.add('neon');
         } else {
