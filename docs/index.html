@@ -9,8 +9,8 @@
     <script
         src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  <script type="module" crossorigin src="./assets/index-34fb2bae.js"></script>
-  <link rel="stylesheet" href="./assets/index-b5065a47.css">
+  <script type="module" crossorigin src="./assets/index-e96cb74d.js"></script>
+  <link rel="stylesheet" href="./assets/index-73ee661c.css">
 </head>
 
 <body class="inline">
@@ -29,28 +29,30 @@
             animation-mixer='clip:twerk; loop:infinite; crossFadeDuration: 2;'></a-entity>
 
         <a-entity ar-hit-test="doHitTest:false" visible="false">
-            <a-plane rotation="-90 0 0" width="0.2" height="0.2" src="./arrow.png"
+            <a-plane rotation="-90 0 0" width="0.3" height="0.3" src="./assets/images/target.png"
                 material="transparent:true;"></a-plane>
         </a-entity>
 
         <a-sky id="enter-screen-bg" visible="true" src="./assets/images/sky-3.jpg"></a-sky>
-
         <a-camera></a-camera>
     </a-scene>
 
 
-    <section class="loading-screen">
-        <div class="loading__content">
-            <img src="./assets/logo-4e376feb.svg">
-            <div class="progress">
-                <div class="progress-value"></div>
-            </div>
-        </div>
-    </section>
+
     
     <section class="enter-screen">
-        <img class="enter__logo" src="./assets/logo-4e376feb.svg">
-        <span class="enter__description">Press AR to start the experience</span>
+        <div class="enter__loading">
+            <div class="loading">
+                <img src="./assets/logo-4e376feb.svg">
+                <div class="progress">
+                    <div class="progress-value"></div>
+                </div>
+            </div>
+        </div>
+        <div class="enter__content is-hidden">
+            <img class="enter__logo" src="./assets/logo-4e376feb.svg">
+            <span class="enter__description">Press AR to start the experience</span>
+        </div>
     </section>
 
     <div id="overlay" class="container">
@@ -85,13 +87,15 @@
         <section class="dancing-lector-app is-hidden">
             <h1 class="app__title-lector">Drop it!</h1>
             <div class="app__buttons">
-                <button class="silly btn-grad btn-grad--round">Silly</button>
-                <button class="twerk btn-grad btn-grad--round">Twerk</button>
-                <button class="flair btn-grad btn-grad--round">Break<br>dance</button>
-                <button class="idle btn-grad btn-grad--round">Idle</button>
+                <button class="idle btn-grad btn-grad--round start-record">
+                    <img src="./assets/micro-43d3fad1.png" alt="">
+                </button>
                 <button data-name="lector" class="exit-app btn-grad btn-grad--round">
                     <img src="data:image/png;base64,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" alt="">
                 </button>
+            </div>
+            <div class="transcription">
+                <p class="transcription__content"></p>
             </div>
         </section>
     </div>

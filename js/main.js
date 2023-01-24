@@ -11,6 +11,7 @@ function hasDomOverlay(session) {
 const app = {
   init() {
     this.cacheElements();
+    this.getAttributeArray();
     this.showLoadingScreen();
   },
   cacheElements() {
@@ -24,15 +25,17 @@ const app = {
     this.$virtualPetUI = document.querySelector('.virtual-pet-app');
     this.$launchDancingLector = document.querySelector('.launch-dancing-lector');
     this.$dancingLectorUI = document.querySelector('.dancing-lector-app');
+    this.$transcript = document.querySelector(".transcription__content");
+    this.$recordBtn = document.querySelector(".start-record");
     this.$reticle = document.querySelector("[ar-hit-test]");
     this.$sambaBtn = document.querySelector('.samba');
     this.$hipHopBtn = document.querySelector('.hiphop');
     this.$bellyBtn = document.querySelector('.belly');
     this.$swingBtn = document.querySelector('.swing');
-    this.$flairBtn = document.querySelector('.flair');
-    this.$sillyBtn = document.querySelector('.silly');
-    this.$twerkBtn = document.querySelector('.twerk');
-    this.$idleBtn = document.querySelector('.idle');
+    // this.$flairBtn = document.querySelector('.flair');
+    // this.$sillyBtn = document.querySelector('.silly');
+    // this.$twerkBtn = document.querySelector('.twerk');
+    // this.$idleBtn = document.querySelector('.idle');
     this.$ExitApp = document.querySelectorAll('.exit-app')
     this.addEventListeners();
   },
@@ -44,6 +47,64 @@ const app = {
       this.$enterARBtn = document.querySelector('.a-enter-ar');
       this.$enterARBtn.classList.add('is-visible');
     }, 4000);
+  },
+  enableSpeechRecognition(object) {
+
+    // If browser doesn't support the speech recognition API, send an error message
+    if (!window.webkitSpeechRecognition) {
+      alert("Sorry, your browser does not support the webkitSpeechRecognition API");
+    } else {
+      // Set speech recognition API 
+      const recognition = new webkitSpeechRecognition();
+      recognition.interimResults = true;
+
+      // Set variables    
+      const $transcript = this.$transcript;
+      const $recordBtn = this.$recordBtn;
+      
+      // Start speech recognition when record button is pressed
+      $recordBtn.addEventListener("click", function () {
+        recognition.start();
+        $recordBtn.disabled = true;
+      });
+
+      // Stop the speech recognition when there is no sound to record
+      recognition.onspeechend = function () {
+        recognition.stop();
+        $recordBtn.disabled = false;
+      }
+
+      let transcriptionArray = [];
+      const attributesArray = ['twerk', 'break dance', 'idle', 'silly'];
+      
+      // Show transcription result in the DOM
+      recognition.addEventListener("result", function (event) {
+        let transcription = "";
+        
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            transcription += event.results[i][0].transcript;
+          } else {
+            transcription += event.results[i][0].transcript;
+          }
+        }
+        
+        // Show only the first pronounced word
+        $transcript.innerHTML = transcription;
+        // Add the different transcription objects to an array
+        transcriptionArray = [];
+        transcriptionArray.push(transcription);
+        console.log(transcriptionArray);
+
+        attributesArray.forEach((animation) => {
+          if (transcriptionArray.includes(animation)) {
+            app.addAnimation(object, animation)
+          }
+        })
+      });
+
+
+    }
   },
   addEventListeners() {
     const exit = document.querySelector('.exit-button');
@@ -95,13 +156,16 @@ const app = {
 
     // Get model and show object when screen is selected
     const object = document.getElementById('helena');
+
     app.generatePositionObject(object);
 
+    app.enableSpeechRecognition(object);
+
     // Add animation when button is clicked
-    app.$flairBtn.addEventListener('click', () => app.addAnimation(object, 'flair'));
-    app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
-    app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
-    app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
+    // app.$flairBtn.addEventListener('click', () => app.addAnimation(object, 'flair'));
+    // app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
+    // app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
+    // app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -143,6 +207,10 @@ const app = {
     btn.addEventListener('click', (ev) => {
       window.location.reload();
     })
+  },
+  getAttributeArray() {
+    this.attributesArray =
+      ['twerk', 'idle', 'silly', 'flair'];
   }
 
 }
