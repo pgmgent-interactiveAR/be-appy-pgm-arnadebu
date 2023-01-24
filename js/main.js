@@ -1,13 +1,3 @@
-// function hasDomOverlay(session) {
-//   if (!session.domOverlayState) {
-//     return false;
-//   }
-//   if (!session.domOverlayState.type) {
-//     return false;
-//   }
-//   return true;
-// }
-
 const app = {
   init() {
     this.cacheElements();
@@ -39,7 +29,7 @@ const app = {
     this.$scene = document.querySelector('a-scene');
   },
   showLoadingScreen() {
-    // Remove loading screen after 4 seconds and show Enter AR user interface
+    // Remove loading screen after 6 seconds and show Enter AR user interface
     setTimeout(() => {
       this.$loadingScreen.classList.add('is-hidden');
       this.$enterScreen.classList.remove('is-hidden');

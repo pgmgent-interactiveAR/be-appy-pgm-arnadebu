@@ -1,6 +1,5 @@
 :root {
   /* Colors */
-
   --color-primary-1: #7E57C5;
   --color-primary-2: #554994;
   --color-primary-3: #1F1829;
@@ -15,7 +14,6 @@
   --color-neutral-5: #ddd7d7;
 
   --color-gradient-1: linear-gradient(238deg, rgba(64, 19, 146, 1) 0%, rgba(126, 87, 197, 1) 150%);
-  ;
   --color-gradient-3: #090215;
 
   --bg-gradient-1: linear-gradient(195deg,
@@ -238,7 +236,8 @@ body {
 .splash__title {
   text-align: center;
   color: white;
-  font-size: 3rem;
+  font-weight: bold;
+  font-size: 3.5rem;
   margin: 0;
 }
 
@@ -341,7 +340,7 @@ body {
 
 .btn-grad {
   text-align: center;
-  background-color: var(--color-button-1);
+  background-color: #351b71d2;
   box-shadow: var(--box-shadow-2);
   margin: 0;
   white-space: nowrap;
@@ -360,7 +359,7 @@ body {
 
 .btn-grad.btn-grad--outline {
   background: transparent;
-  border: 2px solid var(--color-neutral-3);
+  border: 1.5px solid var(--color-neutral-3);
 }
 
 .btn-grad:hover {
