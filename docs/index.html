@@ -9,8 +9,8 @@
     <script
         src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
-  <script type="module" crossorigin src="./assets/index-e96cb74d.js"></script>
-  <link rel="stylesheet" href="./assets/index-73ee661c.css">
+  <script type="module" crossorigin src="./assets/index-921e5ac0.js"></script>
+  <link rel="stylesheet" href="./assets/index-57121c64.css">
 </head>
 
 <body class="inline">
@@ -26,14 +26,14 @@
             animation-mixer='clip:swing; loop:infinite; crossFadeDuration: 2;'></a-entity>
         <a-entity visible="false" id="helena" gltf-model="#helenaModel" scale="0.00075 0.00075 0.00075"
             position="0 2 -8" rotation="0"
-            animation-mixer='clip:twerk; loop:infinite; crossFadeDuration: 2;'></a-entity>
+            animation-mixer='clip:sillydance1; loop:infinite; crossFadeDuration: 2;'></a-entity>
 
         <a-entity ar-hit-test="doHitTest:false" visible="false">
             <a-plane rotation="-90 0 0" width="0.3" height="0.3" src="./assets/images/target.png"
                 material="transparent:true;"></a-plane>
         </a-entity>
 
-        <a-sky id="enter-screen-bg" visible="true" src="./assets/images/sky-3.jpg"></a-sky>
+        <a-sky id="enter-screen-bg" visible="true" src="./assets/images/sky.jpg"></a-sky>
         <a-camera></a-camera>
     </a-scene>
 
@@ -41,7 +41,7 @@
 
     
     <section class="enter-screen">
-        <div class="enter__loading">
+        <div class="enter__loading is-hidden">
             <div class="loading">
                 <img src="./assets/logo-4e376feb.svg">
                 <div class="progress">

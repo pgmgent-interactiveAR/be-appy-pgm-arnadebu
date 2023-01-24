@@ -133,7 +133,7 @@ body {
 .progress-value {
   box-shadow: 0 10px 40px -10px #fff;
   border-radius: 100px;
-  animation: load 4s normal forwards;
+  animation: load 6s normal forwards;
   background: #fff;
   height: 30px;
   width: 0;
@@ -303,9 +303,15 @@ body {
   bottom: 0;
   color: white;
   text-transform: uppercase;
-  font-size: 3rem;
+  font-size: 2.5rem;
   width: 100%;
   text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.transcription__content {
+  width: 65%;
 }
 
 /* BUTTONS */

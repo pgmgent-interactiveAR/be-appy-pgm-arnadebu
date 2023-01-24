@@ -1,18 +1,18 @@
-function hasDomOverlay(session) {
-  if (!session.domOverlayState) {
-    return false;
-  }
-  if (!session.domOverlayState.type) {
-    return false;
-  }
-  return true;
-}
+// function hasDomOverlay(session) {
+//   if (!session.domOverlayState) {
+//     return false;
+//   }
+//   if (!session.domOverlayState.type) {
+//     return false;
+//   }
+//   return true;
+// }
 
 const app = {
   init() {
     this.cacheElements();
-    this.getAttributeArray();
     this.showLoadingScreen();
+    this.generateUI();
   },
   cacheElements() {
     this.$goose = document.querySelector('#goose');
@@ -21,6 +21,8 @@ const app = {
     this.$loadingScreen = document.querySelector('.enter__loading');
     this.$enterScreenBg = document.querySelector('#enter-screen-bg');
     this.$splash = document.querySelector('.splash');
+    this.$petTitle = document.querySelector('.app__title-pet');
+    this.$lectorTitle = document.querySelector('.app__title-lector')
     this.$launchVirtualPet = document.querySelector('.launch-virtual-pet');
     this.$virtualPetUI = document.querySelector('.virtual-pet-app');
     this.$launchDancingLector = document.querySelector('.launch-dancing-lector');
@@ -32,94 +34,27 @@ const app = {
     this.$hipHopBtn = document.querySelector('.hiphop');
     this.$bellyBtn = document.querySelector('.belly');
     this.$swingBtn = document.querySelector('.swing');
-    // this.$flairBtn = document.querySelector('.flair');
-    // this.$sillyBtn = document.querySelector('.silly');
-    // this.$twerkBtn = document.querySelector('.twerk');
-    // this.$idleBtn = document.querySelector('.idle');
     this.$ExitApp = document.querySelectorAll('.exit-app')
-    this.addEventListeners();
+    this.$exitBtn = document.querySelector('.exit-button');
+    this.$scene = document.querySelector('a-scene');
   },
   showLoadingScreen() {
+    // Remove loading screen after 4 seconds and show Enter AR user interface
     setTimeout(() => {
       this.$loadingScreen.classList.add('is-hidden');
       this.$enterScreen.classList.remove('is-hidden');
-
-      this.$enterARBtn = document.querySelector('.a-enter-ar');
-      this.$enterARBtn.classList.add('is-visible');
-    }, 4000);
+      document.querySelector('.a-enter-ar').classList.add('is-visible');
+    }, 6000);
   },
-  enableSpeechRecognition(object) {
-
-    // If browser doesn't support the speech recognition API, send an error message
-    if (!window.webkitSpeechRecognition) {
-      alert("Sorry, your browser does not support the webkitSpeechRecognition API");
-    } else {
-      // Set speech recognition API 
-      const recognition = new webkitSpeechRecognition();
-      recognition.interimResults = true;
-
-      // Set variables    
-      const $transcript = this.$transcript;
-      const $recordBtn = this.$recordBtn;
-      
-      // Start speech recognition when record button is pressed
-      $recordBtn.addEventListener("click", function () {
-        recognition.start();
-        $recordBtn.disabled = true;
-      });
-
-      // Stop the speech recognition when there is no sound to record
-      recognition.onspeechend = function () {
-        recognition.stop();
-        $recordBtn.disabled = false;
-      }
-
-      let transcriptionArray = [];
-      const attributesArray = ['twerk', 'break dance', 'idle', 'silly'];
-      
-      // Show transcription result in the DOM
-      recognition.addEventListener("result", function (event) {
-        let transcription = "";
-        
-        for (let i = event.resultIndex; i < event.results.length; i++) {
-          if (event.results[i].isFinal) {
-            transcription += event.results[i][0].transcript;
-          } else {
-            transcription += event.results[i][0].transcript;
-          }
-        }
-        
-        // Show only the first pronounced word
-        $transcript.innerHTML = transcription;
-        // Add the different transcription objects to an array
-        transcriptionArray = [];
-        transcriptionArray.push(transcription);
-        console.log(transcriptionArray);
-
-        attributesArray.forEach((animation) => {
-          if (transcriptionArray.includes(animation)) {
-            app.addAnimation(object, animation)
-          }
-        })
-      });
-
-
-    }
-  },
-  addEventListeners() {
-    const exit = document.querySelector('.exit-button');
-    const scene = document.querySelector('a-scene');
-    const reticle = document.querySelector("[ar-hit-test]");
-    const object = document.getElementById('eagle');
-
-    // ! Exit AR button
-    exit.addEventListener('click', function () {
+  generateUI() {
+    // Exit AR button
+    this.$exitBtn.addEventListener('click', function () {
       window.location.reload();
       // scene.xrSession.end();
     });
 
-    // ! When entering AR mode...
-    scene.addEventListener("enter-vr", () => {
+    /* When entering AR mode... */
+    this.$scene.addEventListener("enter-vr", () => {
 
       // Show splash screen
       this.$enterScreenBg.setAttribute('visible', 'false');
@@ -130,42 +65,37 @@ const app = {
       this.$launchVirtualPet.addEventListener('click', this.generateVirtualPetApp);
       this.$launchDancingLector.addEventListener('click', this.generateDancingLectorApp);
 
-      // Close when exit button is pressed
+      // Close when exit button is selected
       this.$ExitApp.forEach((btn) => app.closeApp(btn));
 
       // Activate hit-test
-      reticle.setAttribute('ar-hit-test', 'doHitTest:true');
-      reticle.setAttribute('visible', 'true');
+      this.$reticle.setAttribute('ar-hit-test', 'doHitTest:true');
+      this.$reticle.setAttribute('visible', 'true');
     });
 
-    // ! When leaving AR mode...
-    scene.addEventListener("exit-vr", () => {
+    /* When leaving AR mode... */
+    this.$scene.addEventListener("exit-vr", () => {
       // Remove splash screen
       this.$splash.classList.add('is-hidden');
 
       // Deactivate hit-test
-      reticle.setAttribute('ar-hit-test', 'doHitTest:false');
-      reticle.setAttribute('visible', 'false');
+      this.$reticle.setAttribute('ar-hit-test', 'doHitTest:false');
+      this.$reticle.setAttribute('visible', 'false');
     });
   },
   generateDancingLectorApp() {
     // Remove splash screen and add UI for virtual pet application
     document.querySelector('.splash').classList.add('is-hidden');
     document.querySelector('.dancing-lector-app').classList.remove('is-hidden');
-    document.querySelector('#goose').classList.add('is-hidden');
 
-    // Get model and show object when screen is selected
+    // Set object    
     const object = document.getElementById('helena');
 
+    // Set position when screen is selected
     app.generatePositionObject(object);
 
+    // Enable speech recognition when an animation is pronounced
     app.enableSpeechRecognition(object);
-
-    // Add animation when button is clicked
-    // app.$flairBtn.addEventListener('click', () => app.addAnimation(object, 'flair'));
-    // app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
-    // app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
-    // app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -183,22 +113,95 @@ const app = {
     app.$bellyBtn.addEventListener('click', () => app.addAnimation(object, 'belly'));
     app.$swingBtn.addEventListener('click', () => app.addAnimation(object, 'swing'));
   },
+  enableSpeechRecognition(object) {
+    // If browser doesn't support the speech recognition API, send an error message
+    if (!window.webkitSpeechRecognition) {
+      alert("Sorry, your browser does not support the webkitSpeechRecognition API");
+    } else {
+      // Set speech recognition API 
+      const recognition = new webkitSpeechRecognition();
+      recognition.interimResults = true;
+
+      // Set variables    
+      const $transcript = this.$transcript;
+      const $recordBtn = this.$recordBtn;
+
+      // Start speech recognition when record button is pressed
+      $recordBtn.addEventListener("click", function () {
+        recognition.start();
+        $recordBtn.disabled = true;
+      });
+
+      // Stop the speech recognition when there is no sound to record
+      recognition.onspeechend = function () {
+        recognition.stop();
+        $recordBtn.disabled = false;
+      }
+
+      let transcriptionArray = [];
+      const animationArray = ['twerk', 'break', 'still', 'silly'];
+
+      // Show transcription result in the DOM
+      recognition.addEventListener("result", function (event) {
+        let transcription = "";
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          if (event.results[i].isFinal) {
+            transcription += event.results[i][0].transcript;
+          } else {
+            transcription += event.results[i][0].transcript;
+          }
+        }
+
+        // Show only the first pronounced word
+        $transcript.innerHTML = transcription;
+        // Add the different transcription objects to an array
+        transcriptionArray = [];
+        transcriptionArray.push(transcription);
+        console.log(transcriptionArray);
+
+        // Loop over the animation array
+        animationArray.forEach((animation) => {
+          // Check if the animation is available, if so start the animation
+          const animationExist = transcriptionArray.some((element) => element.includes(animation));
+
+          if (animationExist) {
+            app.addAnimation(object, animation)
+          }
+        })
+      });
+    }
+  },
   addAnimation(object, animation) {
-    object.setAttribute('animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
+    switch (animation) {
+      case "break":
+        object.setAttribute('animation-mixer', `clip:flair; loop:infinite; crossFadeDuration: 2;`);
+        break;
+      case "silly":
+        object.setAttribute('animation-mixer', `clip:sillydance1; loop:infinite; crossFadeDuration: 2;`);
+        break;
+      case "still":
+        object.setAttribute('animation-mixer', `clip:idle; loop:infinite; crossFadeDuration: 2;`);
+        break;
+      default:
+        object.setAttribute('animation-mixer', `clip:${animation}; loop:infinite; crossFadeDuration: 2;`);
+        break;
+    }
   },
   generatePositionObject(object) {
-    const $reticle = this.$reticle;
-
-    $reticle.addEventListener('select', function () {
+    // Place model when screen is selected
+    app.$reticle.addEventListener('select', function () {
       if (this.components["ar-hit-test"].hasFoundAPose) {
         if (object.id == "helena") {
-          document.querySelector('.app__title-lector').innerHTML = "Let's go Helena!";
-          document.querySelector('.app__title-lector').classList.add('neon');
+          // Add title block
+          app.$lectorTitle.innerHTML = "Let's go Helena!";
+          // Add a neon effect to the title block
+          app.$lectorTitle.classList.add('neon');
         } else {
-          document.querySelector('.app__title-pet').innerHTML = "Goose Party!";
-          document.querySelector('.app__title-pet').classList.add('neon');
+          app.$petTitle.innerHTML = "Goose Party!";
+          app.$petTitle.classList.add('neon');
         }
-        object.setAttribute("position", $reticle.getAttribute("position"));
+        object.setAttribute("position", app.$reticle.getAttribute("position"));
         object.setAttribute("visible", true);
       }
     });
@@ -208,11 +211,6 @@ const app = {
       window.location.reload();
     })
   },
-  getAttributeArray() {
-    this.attributesArray =
-      ['twerk', 'idle', 'silly', 'flair'];
-  }
-
 }
 
 app.init();
