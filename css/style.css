@@ -152,7 +152,7 @@ body {
   top: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1000;
+  z-index: 0;
 }
 
 .enter__content {
@@ -160,8 +160,10 @@ body {
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 40%;
+  width: 100%;
+  top: 37%;
   translate: 0 -50%;
+  z-index: 0;
 }
 
 .enter__description {
@@ -179,7 +181,10 @@ body {
   position: static !important;
   padding: 3rem !important;
   background-color: transparent !important;
-  /* background: transparent !important; */
+}
+
+.enter__content:has(.is-hidden) .a-enter-ar  {
+  display: none;
 }
 
 .a-enter-ar-button:hover {
@@ -191,7 +196,7 @@ body {
   padding: 0 1rem;
   border-radius: 1rem;
   background: var(--color-gradient-1);
-  z-index: 1000;
+  z-index: 0;
   bottom: auto !important;
   width: fit-content;
   position: absolute;
@@ -200,6 +205,10 @@ body {
   left: 50%;
   translate: -50% -50%;
   width: fit-content !important;
+}
+
+.a-enter-ar.is-visible {
+  z-index: 1000;
 }
 
 .a-enter-vr {
@@ -332,7 +341,7 @@ body {
 }
 
 .btn-grad:hover {
-  background-position: right center;
+  box-shadow: none;
   color: #fff;
   text-decoration: none;
 }

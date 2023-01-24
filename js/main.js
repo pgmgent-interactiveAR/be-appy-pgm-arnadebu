@@ -11,11 +11,13 @@ function hasDomOverlay(session) {
 const app = {
   init() {
     this.cacheElements();
-    // this.showLoadingScreen();
+    this.showLoadingScreen();
   },
   cacheElements() {
-    this.$enterScreen = document.querySelector('.enter-screen');
-    this.$loadingScreen = document.querySelector('.loading-screen');
+    this.$goose = document.querySelector('#goose');
+    this.$helena = document.querySelector('#helena');
+    this.$enterScreen = document.querySelector('.enter__content');
+    this.$loadingScreen = document.querySelector('.enter__loading');
     this.$enterScreenBg = document.querySelector('#enter-screen-bg');
     this.$splash = document.querySelector('.splash');
     this.$launchVirtualPet = document.querySelector('.launch-virtual-pet');
@@ -37,6 +39,10 @@ const app = {
   showLoadingScreen() {
     setTimeout(() => {
       this.$loadingScreen.classList.add('is-hidden');
+      this.$enterScreen.classList.remove('is-hidden');
+
+      this.$enterARBtn = document.querySelector('.a-enter-ar');
+      this.$enterARBtn.classList.add('is-visible');
     }, 4000);
   },
   addEventListeners() {
@@ -48,6 +54,7 @@ const app = {
     // ! Exit AR button
     exit.addEventListener('click', function () {
       window.location.reload();
+      // scene.xrSession.end();
     });
 
     // ! When entering AR mode...
@@ -95,8 +102,6 @@ const app = {
     app.$sillyBtn.addEventListener('click', () => app.addAnimation(object, 'sillydance1'));
     app.$twerkBtn.addEventListener('click', () => app.addAnimation(object, 'twerk'));
     app.$idleBtn.addEventListener('click', () => app.addAnimation(object, 'idle'));
-
-
   },
   generateVirtualPetApp() {
     // Remove splash screen and add UI for virtual pet application
@@ -136,12 +141,7 @@ const app = {
   },
   closeApp(btn) {
     btn.addEventListener('click', (ev) => {
-      if (btn.dataset.name == "lector") {
-        document.querySelector('.dancing-lector-app').classList.add('is-hidden'); 
-      } else {
-        document.querySelector('.virtual-pet-app').classList.add('is-hidden'); 
-      }
-      app.$splash.classList.remove('is-hidden');
+      window.location.reload();
     })
   }
 
