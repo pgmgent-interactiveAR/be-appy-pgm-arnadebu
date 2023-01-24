@@ -11,7 +11,7 @@ function hasDomOverlay(session) {
 const app = {
   init() {
     this.cacheElements();
-    this.showLoadingScreen();
+    // this.showLoadingScreen();
   },
   cacheElements() {
     this.$enterScreen = document.querySelector('.enter-screen');

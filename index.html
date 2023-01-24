@@ -37,18 +37,21 @@
     </a-scene>
 
 
-    <section class="loading-screen">
-        <div class="loading__content">
-            <img src="./assets/svg/logo.svg">
-            <div class="progress">
-                <div class="progress-value"></div>
-            </div>
-        </div>
-    </section>
+
     
     <section class="enter-screen">
-        <img class="enter__logo" src="./assets/svg/logo.svg">
-        <span class="enter__description">Press AR to start the experience</span>
+        <div class="enter__loading is-hidden">
+            <div class="loading">
+                <img src="./assets/svg/logo.svg">
+                <div class="progress">
+                    <div class="progress-value"></div>
+                </div>
+            </div>
+        </div>
+        <div class="enter__content">
+            <img class="enter__logo" src="./assets/svg/logo.svg">
+            <span class="enter__description">Press AR to start the experience</span>
+        </div>
     </section>
 
     <div id="overlay" class="container">
