@@ -59,7 +59,21 @@
 }
 
 body {
-  font-family: "consolas"
+  font-family: "Consolas"
+}
+
+@font-face {
+  font-family: 'Consolas';
+  src: url('../assets/fonts/Consolas-Bold.woff2') format('woff2'),
+      url('../assets/fonts/Consolas-Bold.woff') format('woff');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: 'Consolas';
+  src: url('../assets/fonts/Consolas.woff2') format('woff2'),
+      url('../assets/fonts/Consolas.woff') format('woff');
+  font-weight: normal;
 }
 
 #overlay {
@@ -70,15 +84,6 @@ body {
   width: 100vw;
   z-index: 0;
   user-select: auto;
-}
-
-#overlay:xr-overlay {
-  width: 3rem;
-  height: 3rem;
-  background-color: green;
-  position: absolute;
-  left: 0;
-  top: 0;
 }
 
 .is-visible {
@@ -170,6 +175,7 @@ body {
 }
 
 .enter__description {
+  font-family: "Consolas";
   font-size: 2rem;
   color: white;
   text-align: center;
@@ -348,7 +354,7 @@ body {
   border-radius: 10px;
   display: block;
   border: none;
-  font-family: "consolas";
+  font-family: 'Consolas';
   cursor: pointer;
 }
 
