@@ -59,7 +59,7 @@
 }
 
 body {
-  font-family: consolas
+  font-family: "consolas"
 }
 
 #overlay {
@@ -348,7 +348,7 @@ body {
   border-radius: 10px;
   display: block;
   border: none;
-  font-family: consolas;
+  font-family: "consolas";
   cursor: pointer;
 }
 
